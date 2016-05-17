@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='hive-django-storage-swift',
-    version='1.2.9',
+    version='1.2.10',
     description='OpenStack Swift storage backend for Django',
     long_description=open('README.rst').read(),
     url='http://github.com/nilliams/django-storage-swift',
