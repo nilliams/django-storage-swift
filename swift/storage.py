@@ -21,6 +21,9 @@ except ImportError:
     raise ImproperlyConfigured("Could not load swiftclient library")
 
 
+IS_FONT_RE = re.compile(r'.*\.(eot|otf|woff|ttf|svg)$')
+
+
 def setting(name, default=None):
     return getattr(settings, name, default)
 
@@ -169,11 +172,19 @@ class SwiftStorage(Storage):
             content.seek(0)
         else:
             content_type = mimetypes.guess_type(name)[0]
+
+        # Hack in CORS for all fonts
+        headers = {'Content-Type': content_type}
+
+        if IS_FONT_RE.match(name):
+            headers['Access-Control-Allow-Origin'] = '*'
+
         swiftclient.put_object(self.storage_url,
                                self.token,
                                self.container_name,
                                name,
                                content,
+                               headers=headers,
                                http_conn=self.http_conn,
                                content_type=content_type)
         return name
