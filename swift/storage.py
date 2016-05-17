@@ -21,7 +21,7 @@ except ImportError:
     raise ImproperlyConfigured("Could not load swiftclient library")
 
 
-IS_FONT_RE = re.compile(r'.*\.(eot|otf|woff|ttf|svg)$')
+IS_FONT_RE = re.compile(r'.*\.(eot|otf|woff|woff2|ttf|svg)$')
 
 
 def setting(name, default=None):
