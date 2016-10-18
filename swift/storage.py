@@ -174,7 +174,10 @@ class SwiftStorage(Storage):
             content_type = mimetypes.guess_type(name)[0]
 
         # Hack in CORS for all fonts
-        headers = {'Content-Type': content_type}
+        headers = {}
+
+        if content_type:
+            headers['Content-Type'] = content_type
 
         if IS_FONT_RE.match(name):
             headers['Access-Control-Allow-Origin'] = '*'
